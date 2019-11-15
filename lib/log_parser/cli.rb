@@ -15,7 +15,7 @@ module LogParser
       end
 
       def start(options)
-        LogParser::Analyser.new(options).process
+        LogParser::Processor.new(options).process
       end
     end
   end

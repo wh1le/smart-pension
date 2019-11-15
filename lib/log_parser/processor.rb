@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module LogParser
-  class Analyser
+  class Processor
     def initialize(filepath:, strategy:)
       @filepath = filepath
       @strategy = strategy
@@ -9,7 +9,7 @@ module LogParser
       validate!
     end
 
-    def process
+    def perform
       # load_file
       # format_data
       # apply_sotring_strategy

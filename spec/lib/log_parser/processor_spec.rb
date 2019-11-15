@@ -1,4 +1,4 @@
-RSpec.describe LogParser::Analyser do
+RSpec.describe LogParser::Processor do
   let(:options) do
     {
       filepath: File.join(LogParser.root, 'spec', 'fixtures', 'webserver.log'),

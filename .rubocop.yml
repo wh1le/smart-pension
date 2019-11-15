@@ -3,3 +3,5 @@ AllCops:
     - 'spec/**/**'
     - 'tmp/**/**'
     - 'vendor/bundle/**/*'
+Documentation:
+  Enabled: false

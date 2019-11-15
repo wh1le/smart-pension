@@ -25,11 +25,11 @@ RSpec.describe LogParser::CLI do
 
   describe '.start' do
     let(:dummy_analyser) do
-      double('LogParser::Analyser', strategy: strategy, filepath: filepath)
+      double('LogParser::Processor', strategy: strategy, filepath: filepath)
     end
 
     before do
-      allow(LogParser::Analyser).to receive(:new).with(options_hash).and_return(dummy_analyser)
+      allow(LogParser::Processor).to receive(:new).with(options_hash).and_return(dummy_analyser)
     end
 
     it 'calls LogParser::Analyser#process' do
