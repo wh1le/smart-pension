@@ -20,5 +20,7 @@ $ ./bin/log_parser path_to_logfile *options
 rspec
 ```
 ## Possible improvements
+Section is in development
+
 ## License
 MIT

@@ -5,21 +5,30 @@ module LogParser
     def initialize(filepath:, strategy:)
       @filepath = filepath
       @strategy = strategy
-
-      validate!
     end
 
-    def perform
-      # load_file
-      # format_data
-      # apply_sotring_strategy
-      # present
+    def get_analytics
+      records = loader.new(filepath: @filepath).records
+      result = analyzer.new(records: records, strategy: @strategy).perform_strategy
+      presenter.new(result: result, strategy: @strategy).report_to_stdout
     end
 
     private
 
-    def validate!
-      LogParser::Validation::LogFile.new(filepath: @filepath).perform!
+    def validate_options
+      Validation::LogFile.new(filepath: @filepath).perform!
+
+      raise StrategyInvalid unless STRATEGIES.include?(@strategy)
+    end
+
+    def loader
+      Data::Loader
+    end
+
+    def analyzer
+    end
+
+    def presenter
     end
   end
 end
