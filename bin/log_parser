@@ -1,7 +1,8 @@
 #!/usr/bin/env ruby
+
+require_relative '../lib/log_parser'
+
 $0 = 'log_parser'
 
-require 'log_parser'
-
-options = LogParser::CLI.parse_options
+options = LogParser::CLI.parse_options(ARGV)
 LogParser::CLI.start(options)

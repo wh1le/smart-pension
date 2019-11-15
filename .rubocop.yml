@@ -2,3 +2,4 @@ AllCops:
   Exclude:
     - 'spec/**/**'
     - 'tmp/**/**'
+    - 'vendor/bundle/**/*'
