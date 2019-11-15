@@ -63,34 +63,34 @@ RSpec.describe LogParser::Processor do
       ]
     end
 
-    let(:analyzer_result) { {} }
+    let(:analiser_result) { {} }
  
     let(:dummy_loader) do
       double('Data::Loader', filepath: options[:filepath])
     end
 
-    let(:dummy_analyzer) do
-      double('Strategy::Analyzer', records: log_record_objects, startegy: options[:strategy])
+    let(:dummy_analyser) do
+      double('Strategy::Analyser', records: log_record_objects, startegy: options[:strategy])
     end
 
     let(:dummy_presenter) do
-      double('Strategy::Presenter', result: analyzer_result, strategy: options[:strategy])
+      double('Strategy::Presenter', result: analyser_result, strategy: options[:strategy])
     end
 
     it 'calls all required services in the right way' do
       allow(LogParser::Data::Loader).to receive(:new).with(filepath: options[:filepath])
         .and_return(dummy_loader)
 
-      allow(LogParser::Statistics::Anaylizer).to receive(:new)
+      allow(LogParser::Statistics::Analyser).to receive(:new)
         .with(records: log_record_objects, strategy: options[:strategy])
-        .and_return(dummy_analyzer)
+        .and_return(dummy_analyser)
 
       allow(LogParser::Statistics::Presenter).to receive(:new)
-        .with(result: analyzer_result, strategy: options[:strategy])
+        .with(result: analyser_result, strategy: options[:strategy])
 
       expect(dummy_loader).to receive(:records).and_return(log_record_objects)
 
-      expect(dummy_analyzer).to receive(:perform_strategy).and_return(analyzer_result)
+      expect(dummy_analyser).to receive(:perform_strategy).and_return(analyser_result)
       expect(dummy_presenter).to receive(:report_to_stdout)
 
       subject.get_analytics

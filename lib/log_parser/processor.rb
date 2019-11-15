@@ -26,9 +26,9 @@ module LogParser
     end
 
     def analyzer
+      Statistics::Analyser
     end
 
-    def presenter
-    end
+    def presenter; end
   end
 end
