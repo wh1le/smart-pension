@@ -15,18 +15,26 @@ RSpec.describe LogParser::Processor do
     end
 
     it 'assigns strategy to @strategy' do
-      expect(subject.instance_variable_get(:@strategy))
+      expect(subject.instance_variable_get(:@strategy_name))
         .to eq(options[:strategy])
     end
 
-  end
-
-  describe '#get_analytics' do
     let(:dummy_file_validation) do
       double('LogParser::Validation::LogFile', filepath: options[:filepath])
     end
 
-    context 'strategy is invalid' do
+    it 'calls validation' do
+      allow(LogParser::Validation::LogFile).to receive(:new)
+        .and_return(dummy_file_validation)
+
+      expect(dummy_file_validation).to receive(:perform!)
+
+      subject
+    end
+  end
+
+  describe '#get_analytics' do
+    context 'when strategy is invalid' do
       before do
         options[:strategy] = 'awesome'
       end
@@ -36,7 +44,7 @@ RSpec.describe LogParser::Processor do
       end
     end
 
-    context 'filepath is invalid' do 
+    context 'when filepath is invalid' do 
       before do
         options[:filepath] = '../not_found'
       end
@@ -44,15 +52,6 @@ RSpec.describe LogParser::Processor do
       it 'raises error' do
         expect { subject.get_analytics }.to raise_error { LogParser::StrategyInvalid }
       end
-    end
-
-    it 'calls validation' do
-      allow(LogParser::Validation::LogFile).to receive(:new)
-        .and_return(dummy_file_validation)
-
-      expect(dummy_file_validation).to receive(:perform!)
-
-      subject.get_analytics
     end
 
     let(:log_record_objects) do
@@ -63,7 +62,7 @@ RSpec.describe LogParser::Processor do
       ]
     end
 
-    let(:analiser_result) { {} }
+    let(:analyser_result) { {} }
  
     let(:dummy_loader) do
       double('Data::Loader', filepath: options[:filepath])
@@ -82,18 +81,25 @@ RSpec.describe LogParser::Processor do
         .and_return(dummy_loader)
 
       allow(LogParser::Statistics::Analyser).to receive(:new)
-        .with(records: log_record_objects, strategy: options[:strategy])
+        .with(
+          records: log_record_objects,
+          strategy: LogParser::Statistics::Strategies::Popularity
+        )
         .and_return(dummy_analyser)
 
       allow(LogParser::Statistics::Presenter).to receive(:new)
-        .with(result: analyser_result, strategy: options[:strategy])
+        .with(
+          result: analyser_result,
+          strategy: LogParser::Statistics::Strategies::Popularity
+        )
+        .and_return(dummy_presenter)
 
       expect(dummy_loader).to receive(:records).and_return(log_record_objects)
 
       expect(dummy_analyser).to receive(:perform_strategy).and_return(analyser_result)
       expect(dummy_presenter).to receive(:report_to_stdout)
 
-      subject.get_analytics
+      subject.analytics
     end
   end
 end

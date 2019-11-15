@@ -4,6 +4,10 @@ module LogParser
   module Statistics
     module Strategies
       class Popularity
+        def self.message(path, quantity)
+          "#{path} #{quantity} visits"
+        end
+
         def initialize(records:)
           @records = records
         end

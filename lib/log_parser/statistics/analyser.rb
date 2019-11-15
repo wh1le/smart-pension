@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module LogParser
   module Statistics
     class Analyser
@@ -6,21 +8,8 @@ module LogParser
         @strategy = strategy
       end
 
-      def perform
-        strategy.new(records: @records).perform
-      end
-
-      private
-
-      def strategy
-        case @strategy
-        when 'popularity'
-          Strategies::Popularity
-        when 'popularity_uniquness'
-          Strategies::PopularityUniquness
-        else
-          raise StrategyInvalid
-        end
+      def perform_strategy
+        @strategy.new(records: @records).perform
       end
     end
   end

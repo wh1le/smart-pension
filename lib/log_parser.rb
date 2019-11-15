@@ -4,6 +4,7 @@ require_relative 'log_parser/cli'
 require_relative 'log_parser/data'
 require_relative 'log_parser/processor'
 require_relative 'log_parser/statistics'
+require_relative 'log_parser/factories'
 require_relative 'log_parser/validation'
 
 # Base module

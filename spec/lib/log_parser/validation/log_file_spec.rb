@@ -11,34 +11,34 @@ RSpec.describe LogParser::Validation::LogFile do
   end
 
   describe '#perform!' do
-    context 'file doesn\'t exist' do
+    context 'when file doesn\'t exist' do
       let(:filepath) { './not_found' }
 
       it 'raises error' do
         expect { subject.perform! }.to raise_error { LogParser::Validation::LogFileInvalidError }
       end
 
-      it 'add message to messages' do
+      it 'adds message to messages' do
         expect { subject.perform! }.to raise_error { LogParser::Validation::LogFileInvalidError }
         expect(subject.messages).to include('File doesn\'t exist')
       end
     end
 
-    context 'file exists' do
-      context 'has correct extension' do
+    context 'when file exists' do
+      context 'when has correct extension' do
         it 'returns true' do
           expect(subject.perform!).to eq(true)
         end
       end
 
-      context 'has incorect extension' do
+      context 'when has incorect extension' do
         let(:filepath) { File.join(LogParser.root, 'spec', 'spec_helper.rb') }
 
         it 'raises error' do
           expect { subject.perform! }.to raise_error { LogParser::Validation::LogFileInvalidError }
         end
 
-        it 'add message to messages' do
+        it 'adds message to messages' do
           expect { subject.perform! }.to raise_error { LogParser::Validation::LogFileInvalidError }
           expect(subject.messages).to include('Extension is not valid.')
         end

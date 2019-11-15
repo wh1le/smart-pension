@@ -1,5 +1,5 @@
 RSpec.describe LogParser::Statistics::Analyser do
-  let(:strategy) { 'popularity' }
+  let(:strategy) { LogParser::Statistics::Strategies::Popularity }
   let(:records) do
     [
       LogParser::Data::Model::LogRecord.new( '/about', '127.0.0.1'),
@@ -22,8 +22,8 @@ RSpec.describe LogParser::Statistics::Analyser do
     end
   end
 
-  describe '#perform' do
-    context 'strategy is :popularity' do
+  describe '#perform_strategy' do
+    context 'when strategy is :popularity' do
       let(:dummy_popularity) { double('LogParser::Statistics::Strategies::Popularity') }
 
       it 'loads Strategies::Popularity and calls it' do
@@ -33,12 +33,12 @@ RSpec.describe LogParser::Statistics::Analyser do
 
         expect(dummy_popularity).to receive(:perform)
 
-        subject.perform
+        subject.perform_strategy
       end
     end
 
-    context 'strategy is :popularity_uniquness' do
-      let(:strategy) { 'popularity_uniquness' }
+    context 'when strategy is :popularity_uniquness' do
+      let(:strategy) { LogParser::Statistics::Strategies::PopularityUniquness }
       let(:dummy_popularity) { double('LogParser::Statistics::Strategies::PopularityUniquness') }
 
       it 'loads Strategies::Popularity and calls it' do
@@ -48,7 +48,7 @@ RSpec.describe LogParser::Statistics::Analyser do
 
         expect(dummy_popularity).to receive(:perform)
 
-        subject.perform
+        subject.perform_strategy
       end
     end
   end

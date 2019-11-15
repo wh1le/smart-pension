@@ -10,7 +10,7 @@ RSpec.describe LogParser::CLI do
   end
 
   describe '.parse_options' do
-    context 'there are no arguments' do
+    context 'when there are no arguments' do
       it 'raises NoOptionsError' do
         expect { described_class.parse_options(arguments) }
           .to raise_error { LogParser::CLI::NoOptionsError }
@@ -33,7 +33,7 @@ RSpec.describe LogParser::CLI do
     end
 
     it 'calls LogParser::Analyser#process' do
-      expect(dummy_analyser).to receive(:process)
+      expect(dummy_analyser).to receive(:analytics)
 
       described_class.start(options_hash)
     end

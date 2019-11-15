@@ -10,7 +10,7 @@ RSpec.describe LogParser::Data::Serializer do
   end
 
   describe '#serialize_to_objects' do
-    context 'data from file is valid' do
+    context 'when data from file is valid' do
       it 'returns objects of LogRecord' do
         expect(subject.serialize_to_objects.sample).to be_a(LogParser::Data::Model::LogRecord)
       end
@@ -21,9 +21,9 @@ RSpec.describe LogParser::Data::Serializer do
       end
     end
 
-    context 'data from file is not valid' do
+    context 'when data from file is not valid' do
 
-      context 'empty attribute' do
+      context 'when empty attribute' do
         let(:data) { "/about \n \n" }
 
         it 'raises AttributeIsEmpty error' do
@@ -31,7 +31,7 @@ RSpec.describe LogParser::Data::Serializer do
         end
       end
 
-      context 'invalid ip' do
+      context 'when invalid ip' do
         let(:data) { "/about 12.2.2\n \n" }
 
         it 'raises InvalidIpAddress error' do

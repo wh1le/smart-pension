@@ -14,7 +14,7 @@ module LogParser
       private
 
       def data
-        File.open(@filepath, 'r')
+        File.open(@filepath, 'r').read
       end
 
       def serializer
