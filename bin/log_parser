@@ -1,0 +1,7 @@
+#!/usr/bin/env ruby
+$0 = 'log_parser'
+
+require 'log_parser'
+
+options = LogParser::CLI.parse_options
+LogParser::CLI.start(options)
